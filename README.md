@@ -1,4 +1,4 @@
-# HTML + JavaScript Starter Project
+# Youtube Dashboard Query Project
 
 This is a basic starter project demonstrating how to run HTML and JavaScript files using the Live Server extension in Visual Studio Code.
 
@@ -52,6 +52,4 @@ When opened with Live Server:
   JavaScript is working!
   ```
 
-## 📬 Questions?
 
-If you face any issue setting this up, feel free to raise a question or drop a message.
