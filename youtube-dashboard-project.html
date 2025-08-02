@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-3xl font-bold text-red-600 mb-6 flex items-center">
+                <i class="fab fa-youtube mr-3"></i> YouTube Video Dashboard
+            </h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Search Filters -->
+                <div class="lg:col-span-1 bg-gray-50 p-4 rounded-lg">
+                    <h2 class="text-xl font-semibold mb-4">Search Filters</h2>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Search Query</label>
+                        <input type="text" id="query" placeholder="Enter search term" 
+                               class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Date Range</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="date" id="fromDate" class="p-2 border border-gray-300 rounded">
+                            <input type="date" id="toDate" class="p-2 border border-gray-300 rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Sort By</label>
+                        <select id="sortBy" class="w-full p-2 border border-gray-300 rounded">
+                            <option value="publishedAt_desc">Newest First</option>
+                            <option value="publishedAt_asc">Oldest First</option>
+                            <option value="viewCount_desc">Most Views</option>
+                            <option value="likeCount_desc">Most Likes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Results Per Page</label>
+                        <select id="perPage" class="w-full p-2 border border-gray-300 rounded">
+                            <option value="10">10</option>
+                            <option value="20" selected>20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    
+                    <button id="searchButton" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        <i class="fas fa-search mr-2"></i> Search Videos
+                    </button>
+                </div>
+                
+                <!-- Results Section -->
+                <div class="lg:col-span-3">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold">Search Results</h2>
+                        <div class="text-gray-600">
+                            <span id="resultsCount">0</span> videos found
+                        </div>
+                    </div>
+                    
+                    <div id="loading" class="text-center py-8 hidden">
+                        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-red-600 border-r-transparent"></div>
+                        <p class="mt-2 text-gray-600">Fetching videos...</p>
+                    </div>
+                    
+                    <div id="noResults" class="text-center py-10 hidden">
+                        <i class="fas fa-video-slash text-4xl text-gray-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-700">No videos found</h3>
+                        <p class="text-gray-600">Try adjusting your search filters</p>
+                    </div>
+                    
+                    <div id="results" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <!-- Videos will be inserted here -->
+                    </div>
+                    
+                    <div id="pagination" class="flex justify-center items-center space-x-2">
+                        <!-- Pagination will be inserted here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Key Management -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-4">API Key Management</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-white p-3 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-medium">Primary Key</span>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Active</span>
+                        </div>
+                        <input type="text" id="apiKey1" value="AIzaSyCnjLUDZLiD8aGt-jC6XZcJ8AKyOwh15To" 
+                               class="w-full p-2 bg-gray-100 rounded text-xs font-mono mb-2" readonly>
+                        <div class="text-xs text-gray-500">Quota: 8,532/10,000</div>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-medium">Secondary Key</span>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Standby</span>
+                        </div>
+                        <input type="text" id="apiKey2" placeholder="Enter backup API key" 
+                               class="w-full p-2 bg-gray-100 rounded text-xs font-mono mb-2">
+                    </div>
+                    <div class="bg-white p-3 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-medium">Auto-Refresh</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Every 10s</span>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <button id="toggleRefresh" class="bg-red-600 text-white px-3 py-1 rounded-l text-sm">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <select id="refreshInterval" class="p-1 border border-gray-300 rounded-r text-sm">
+                                <option value="5">5s</option>
+                                <option value="10" selected>10s</option>
+                                <option value="30">30s</option>
+                                <option value="60">60s</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="youtube-dashboard-project.js"></script>
+</body>
+</html>
