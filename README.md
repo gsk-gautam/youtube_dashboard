@@ -4,8 +4,7 @@
 
 This YouTube Video Dashboard is a web application that allows users to search for YouTube videos using various filters and display results in a clean, responsive interface. The application features API key management, pagination, auto-refresh functionality, and detailed video information display.
 
-![Screenshot](<img width="1917" height="1077" alt="image" src="https://github.com/user-attachments/assets/965c5fcc-e439-4e35-9226-0358e3eb4b29" />
-)
+![Screenshot](<img width="1917" height="1077" alt="image" src="https://github.com/user-attachments/assets/965c5fcc-e439-4e35-9226-0358e3eb4b29" />)
 
 ## Features
 
