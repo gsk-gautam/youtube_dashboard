@@ -1,8 +1,7 @@
 // Configuration
 const config = {
     apiKeys: [
-        "AIzaSyCnjLUDZLiD8aGt-jC6XZcJ8AKyOwh15To",
-        "AIzaSyBrzuJNlWT2KVMApzsKCDPdI059HLK8HVg",
+        "Your API",
           
     ],
     currentApiKeyIndex: 0,
@@ -398,4 +397,5 @@ function showError(message) {
 }
 
 // Initialize the dashboard when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', initDashboard);
